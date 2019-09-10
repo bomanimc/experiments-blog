@@ -3,9 +3,9 @@ var repo = /([^\/]+)\.prismic\.io\/graphql/.exec(apiEndpoint);
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Prismic Blog`,
-    description: `Blog example for Gatsby & Prismic`,
-    author: `@levimykel`,
+    title: `Bomani's Experiment Blog`,
+    description: `Blog post assignments for Bomani's experience as a student at NYU's ITP program.`,
+    author: `@bomanimc`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
