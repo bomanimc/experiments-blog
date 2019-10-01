@@ -6,6 +6,7 @@
   "author": "Levi Gable",
   "dependencies": {
     "gatsby": "^2.1.32",
+    "gatsby-plugin-disqus": "^1.1.2",
     "gatsby-plugin-manifest": "^2.0.24",
     "gatsby-plugin-offline": "^2.0.25",
     "gatsby-plugin-react-helmet": "^3.0.9",

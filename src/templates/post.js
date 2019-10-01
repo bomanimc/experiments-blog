@@ -3,10 +3,16 @@ import { graphql, Link } from 'gatsby'
 import { RichText } from 'prismic-reactjs'
 import Layout from '../components/layouts' 
 import { ImageCaption, Quote, Text } from '../components/slices'
+import { Disqus, CommentCount } from 'gatsby-plugin-disqus'
 
 // Query for the Blog Post content in Prismic
 export const query = graphql`
 query BlogPostQuery($uid: String) {
+  site {
+    siteMetadata {
+      siteUrl
+    }
+  }
   prismic{
     allPosts(uid: $uid){
       edges{
@@ -81,8 +87,16 @@ const PostSlices = ({ slices }) => {
 }
 
 // Display the title, date, and content of the Post
-const PostBody = ({ blogPost }) => {
+const PostBody = ({ blogPost, siteUrl }) => {
   const titled = blogPost.title.length !== 0 ;
+  const title = titled ? RichText.asText(blogPost.title) : 'Untitled';
+
+  const disqusConfig = {
+    url: `${siteUrl + window.location.pathname}`,
+    identifier: blogPost._meta.id,
+    title: title,
+  }
+
   return (
     <div>
       <div className="container post-header">
@@ -91,11 +105,12 @@ const PostBody = ({ blogPost }) => {
         </div>
         {/* Render the edit button */}
         <h1 data-wio-id={ blogPost._meta.id }>
-          { titled ? RichText.asText(blogPost.title) : 'Untitled' }
+          {title}
         </h1>
       </div>
       {/* Go through the slices of the post and render the appropiate one */}
       <PostSlices slices={ blogPost.body } />
+      <Disqus config={disqusConfig} />
     </div>
   );
 }
@@ -103,12 +118,13 @@ const PostBody = ({ blogPost }) => {
 export default (props) => {
   // Define the Post content returned from Prismic
   const doc = props.data.prismic.allPosts.edges.slice(0,1).pop();
+  const siteUrl = props.data.site.siteMetadata.siteUrl;
 
   if(!doc) return null;
 
   return(
     <Layout>
-      <PostBody blogPost={ doc.node } />
+      <PostBody blogPost={ doc.node } siteUrl={siteUrl} />
     </Layout>
   )
 }
