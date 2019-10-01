@@ -110,7 +110,9 @@ const PostBody = ({ blogPost, siteUrl }) => {
       </div>
       {/* Go through the slices of the post and render the appropiate one */}
       <PostSlices slices={ blogPost.body } />
-      <Disqus config={disqusConfig} />
+      <div className="container">
+        <Disqus config={disqusConfig} />
+      </div>
     </div>
   );
 }
