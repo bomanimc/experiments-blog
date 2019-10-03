@@ -87,12 +87,12 @@ const PostSlices = ({ slices }) => {
 }
 
 // Display the title, date, and content of the Post
-const PostBody = ({ blogPost, siteUrl }) => {
+const PostBody = ({ blogPost, siteUrl, pathname }) => {
   const titled = blogPost.title.length !== 0 ;
   const title = titled ? RichText.asText(blogPost.title) : 'Untitled';
 
   const disqusConfig = {
-    url: `${siteUrl + window.location.pathname}`,
+    url: `${siteUrl + pathname}`,
     identifier: blogPost._meta.id,
     title: title,
   }
@@ -121,12 +121,13 @@ export default (props) => {
   // Define the Post content returned from Prismic
   const doc = props.data.prismic.allPosts.edges.slice(0,1).pop();
   const siteUrl = props.data.site.siteMetadata.siteUrl;
+  const pathname = props.location.pathname
 
   if(!doc) return null;
 
   return(
     <Layout>
-      <PostBody blogPost={ doc.node } siteUrl={siteUrl} />
+      <PostBody blogPost={ doc.node } siteUrl={siteUrl} pathname={pathname} />
     </Layout>
   )
 }
