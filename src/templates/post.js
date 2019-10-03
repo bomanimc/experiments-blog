@@ -92,7 +92,7 @@ const PostBody = ({ blogPost, siteUrl }) => {
   const title = titled ? RichText.asText(blogPost.title) : 'Untitled';
 
   const disqusConfig = {
-    url: `${siteUrl + window.location.pathname}`,
+    url: `${siteUrl + this.props.location.pathname}`,
     identifier: blogPost._meta.id,
     title: title,
   }
